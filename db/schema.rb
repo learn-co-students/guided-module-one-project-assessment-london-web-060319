@@ -13,15 +13,15 @@
 ActiveRecord::Schema.define(version: 2019_06_17_142200) do
 
   create_table "accounts", force: :cascade do |t|
-    t.string "customer"
-    t.string "bank"
+    t.integer "customer_id"
+    t.integer "bank_id"
     t.float "balance"
     t.datetime "account_opening"
     t.datetime "account_closing"
   end
 
   create_table "banks", force: :cascade do |t|
-    t.string "customer"
+    t.string "name_of_bank"
   end
 
   create_table "customers", force: :cascade do |t|
