@@ -1,7 +1,8 @@
 require_relative '../config/environment'
 
 cli = CommandLineInterface.new
-cli.beginning
+reviews = cli.run
+# cli.puts_reviews(reviews)
 # show_all_books
 # cli.puts_reviews(reviews)
 
