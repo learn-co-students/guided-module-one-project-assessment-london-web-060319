@@ -52,7 +52,7 @@ Your **second goal** should be to decide on your [user stories](https://en.wikip
 
 For example, if we were creating an app to review restaurants on Yelp, we might write:
 
-* As a user, I want to enter a location and be given a random nearby restaurant suggestion. (**Read**)
+* As a user, I want to enter a customer id password and be able to see my balance. (**Read**)
 * As a user, I want to be able to write a review for a restaurant. (**Create**)
 * As a user, I want to enter a restaurant and be given user reviews of that restaurant. (**Read**)
 * As a user, I should be able to edit my restaurant review. (**Update**)
