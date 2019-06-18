@@ -39,27 +39,26 @@ class CommandLineInterface
     result = prompt.collect do
     key(:bank).select('Which bank would you like to join?', %w(Barclays Monzo Starling Santander Revolut), required: true)
 
-    @first_name = prompt.ask('First Name?', required: true)
+    key(:first_name).ask('First Name?', required: true)
 
-    @last_name = prompt.ask('First Name?', required: true)
+    key(:last_name).ask('First Name?', required: true)
 
-    @date_of_birth = prompt.ask('Date of birth?', required: true)
+    key(:date_of_birth).ask('Date of birth?', required: true)
 
-    @balance = prompt.ask('Starting balance?', convert: :float, default: 100.00)
+    key(:balance).ask('Starting balance?', convert: :float, default: 100.00)
 
-      street = prompt.ask('Street?', required: true)
-      city =prompt.ask('City?', required: true)
-      zip = prompt.ask('Zip?', validate: /\A\d{3}\Z/, required: true)
-      @address = street + city + zip
-      Customer.create(@first_name, @last_name, @date_of_birth, @balance, @address)
-      Account.create(@user.id)
+    key(:address) do
+      key(:street).ask('Street?', required: true)
+      key(:city).ask('City?', required: true)
+      key(:zip).ask('Zip?', validate: /\A\d{3}\Z/, required: true)
     end
   end
+end
 
 
 
   def run
     greet
-  end
 
+  end
 end
