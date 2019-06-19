@@ -10,7 +10,7 @@ class Customer < ActiveRecord::Base
   end
 
   def close_account
-    @user_bank.account.destroy
+    self.accounts.first.destroy
   end
 
   def make_deposit(deposit_amount)

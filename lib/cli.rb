@@ -38,21 +38,32 @@ class CommandLineInterface
        end
 
        @current_customer = Customer.find_by(id: customer_info[:id], last_name: customer_info[:last_name])
+       user_display
+       # @current_customer = Customer.find_by(id: customer_info[:id], last_name: customer_info[:last_name])
        # if @current_customer.empty?
        #   raise "Invalid account info!"
        # end
+
      end
 
      def user_display
-      selection = prompt.select("What would you like to do today?", %w(Display_Balance  Close_Account Deposit))
+      selection = prompt.select("What would you like to do today?", %w(Display_Balance  Close_Account Deposit Exit))
        if selection == "Display_Balance"
          display_balance
-       elsif selection == "Close Account"
+         sleep 1
+         user_display
+       elsif selection == "Close_Account"
          @current_customer.close_account
+         @prompt.keypress("Your account has been closed!", keys: [:space, :return])
        elsif selection == "Deposit"
-         deposit_amount = prompt.ask('How much would you like to deposit?')
-         @current_customer.make_deposit(deposit_amount)
-         puts @current_customer.accounts[0].balance
+         if @current_customer.accounts.empty?
+           puts "No existing account!"
+         else
+           deposit_amount = prompt.ask('How much would you like to deposit?')
+           @current_customer.make_deposit(deposit_amount)
+           sleep 1
+           user_display
+        end
       end
      end
 
@@ -90,7 +101,6 @@ class CommandLineInterface
 
      def run
        greet
-       user_display
      end
 
  end
