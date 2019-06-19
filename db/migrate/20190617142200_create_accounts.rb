@@ -8,4 +8,5 @@ class CreateAccounts < ActiveRecord::Migration[5.2]
       t.datetime :account_closing
     end
   end
+
 end
