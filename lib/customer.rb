@@ -12,4 +12,11 @@ class Customer < ActiveRecord::Base
   def close_account
     @user_bank.account.destroy
   end
+
+  def make_deposit(deposit_amount)
+    if deposit_amount != nil
+      self.accounts[0].balance += deposit_amount.to_i
+      self.accounts[0].save
+    end
+  end
 end

@@ -3,9 +3,11 @@
 class CommandLineInterface
 
   attr_reader :prompt
+  attr_accessor :current_customer
 
   def initialize
     @prompt = TTY::Prompt.new
+    @current_customer = nil
   end
 
   def greet
@@ -42,14 +44,15 @@ class CommandLineInterface
      end
 
      def user_display
-      selection = prompt.select("What would you like to do today?", %w(Display_Balance  Close_Account))
+      selection = prompt.select("What would you like to do today?", %w(Display_Balance  Close_Account Deposit))
        if selection == "Display_Balance"
          display_balance
        elsif selection == "Close Account"
          @current_customer.close_account
-       # elsif user == "Withdrawal"
-       #   withdrawal
-       # end
+       elsif selection == "Deposit"
+         deposit_amount = prompt.ask('How much would you like to deposit?')
+         @current_customer.make_deposit(deposit_amount)
+         puts @current_customer.accounts[0].balance
       end
      end
 
@@ -68,7 +71,7 @@ class CommandLineInterface
        c = Customer.new(**customer_attrs)
        c.save!
        c
-      end
+    end
 
      def create_customer_account(customer_id)
        account_attrs = prompt.collect do
@@ -89,4 +92,5 @@ class CommandLineInterface
        greet
        user_display
      end
-   end
+
+ end
