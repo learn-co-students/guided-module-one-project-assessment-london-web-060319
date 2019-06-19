@@ -24,6 +24,11 @@ def success(message, user)
     menu(user)
 end
 
+def press_enter_to_main_menu(user)
+    $prompt.ask("\nPress enter to go back to main menu", echo: false)
+    menu(user)
+end
+
 def menu(user)
     system "clear"
     user.reload()
@@ -41,7 +46,6 @@ def menu(user)
         menu.choice "Average reviews per book", 12
         menu.choice "Edit a review", 4
         menu.choice "Delete a review", 5
-
         menu.choice "Exit"
     end
     which_choice?(choice, user)
@@ -53,47 +57,38 @@ def which_choice?(choice, user)
         create_review(user)
     elsif choice == 2 
         puts_certain_books(Book.all, "These are all the books on our platform: \n")
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user)
+        press_enter_to_main_menu(user)
     elsif choice == 3
         puts_certain_reviews(Review.all, "These are all the reviews on our platform:\n")
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user)
+        press_enter_to_main_menu(user)
     elsif choice == 4
         edit_review(user)
     elsif choice == 5
         delete_review(user)
     elsif choice == 6
         puts_certain_books(user.books, "These are all the books you have reviewed so far:\n")
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user)
+        press_enter_to_main_menu(user)
     elsif choice == 7
         puts_certain_reviews(user.reviews, "These are all your reviews:\n")  
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user)      
+        press_enter_to_main_menu(user)   
     elsif choice == 8
         puts "The longest review so far is by: #{User.chattiest.username}"
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user) 
+        press_enter_to_main_menu(user)
     elsif choice == 11
         puts_certain_books(Book.alphabetize_titles, "These are our books in alphabetical order:\n")
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user) 
+        press_enter_to_main_menu(user)
     elsif choice == 10
         puts_certain_books(Book.all, "These are all of our books: \n")
         book_title = ask_input("Please type the book title")
         puts_certain_reviews(Book.find_reviews_of(book_title), "These are the reviews for \"#{book_title}\"")
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user) 
+        press_enter_to_main_menu(user)
     elsif choice == 9
         review = Review.longest
         puts "#{review.id}. Book: \"#{review.book.title}\", User: #{review.user.username} - #{review.content}"
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user) 
+        press_enter_to_main_menu(user)
     elsif choice == 12
         puts "The average reviews per book are: #{Book.average_reviews_per_book}"
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user) 
+        press_enter_to_main_menu(user)
     end
 end
 
@@ -175,8 +170,4 @@ def delete_review(user)
             failed(message, 5, user)
         end
     end
-
-
-
-
 end

@@ -6,8 +6,4 @@ class Review < ActiveRecord::Base
     def self.longest
         find_by(content: Review.pluck(:content).max_by(&:length))
     end
-
-
-    
-
 end

@@ -1,13 +1,13 @@
-# User.delete_all
-# Book.delete_all
-# Review.delete_all
+User.delete_all
+Book.delete_all
+Review.delete_all
 # Users
 
-10.times {User.create(username: Faker::GreekPhilosophers.unique.name.delete(" "))}
+8.times {User.create(username: Faker::GreekPhilosophers.unique.name.delete(" "))}
 
 # Books
 
-20.times {Book.create(title: Faker::Book.unique.title.downcase.capitalize)}
+13.times {Book.create(title: Faker::Book.unique.title.downcase.capitalize)}
 
 # Reviews
 

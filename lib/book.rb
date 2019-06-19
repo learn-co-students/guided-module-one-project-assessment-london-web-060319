@@ -20,12 +20,4 @@ class Book < ActiveRecord::Base
     def self.alphabetize_titles
         Book.all.order(:title)
     end
-
-    # def self.order_by_n_reviews
-    #     Book.order(:)
-    # end
-
-
-
-
 end
