@@ -1,12 +1,15 @@
+# User.delete_all
+# Book.delete_all
+# Review.delete_all
 # Users
 
-10.times {User.create(username: Faker::Hipster.unique.word)}
+10.times {User.create(username: Faker::GreekPhilosophers.unique.name.delete(" "))}
 
 # Books
 
-10.times {Book.create(title: Faker::Book.unique.title)}
+20.times {Book.create(title: Faker::Book.unique.title.downcase.capitalize)}
 
 # Reviews
 
-10.times {Review.create(user_id: User.all.sample.id, book_id: Book.all.sample.id, content: Faker::Hipster.unique.sentence(3, true))}
+20.times {Review.create(user_id: User.all.sample.id, book_id: Book.all.sample.id, content: Faker::GreekPhilosophers.unique.quote)}
 
