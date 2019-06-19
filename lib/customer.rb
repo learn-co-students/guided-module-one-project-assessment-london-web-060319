@@ -8,4 +8,8 @@ class Customer < ActiveRecord::Base
   def account_balances
     self.accounts.map {|a| a.balance}
   end
+
+  def close_account
+    @user_bank.account.destroy
+  end
 end

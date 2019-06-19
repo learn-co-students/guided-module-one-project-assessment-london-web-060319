@@ -12,13 +12,19 @@ class CommandLineInterface
      puts "Welcome to UK Online Banking"
      user = prompt.select("Do you have an account with us?", %w(Yes No))
      if user == 'No'
-       c = create_customer_from_form
-       a = create_customer_account(c.id)
-       puts "Your customer ID is #{c.id}."
+       bank_list = Bank.all.map {|bank| bank.name_of_bank}
+       bank_name = prompt.select('Which bank would you like to join?', [bank_list])
+       @user_bank = Bank.all.find_by(name_of_bank: bank_name)
+       # @user_bank = prompt.collect do
+       #   key(:bank).select('Which bank would you like to join?', %w([bank_list], required: true)
+       # end
+       @current_customer = create_customer_from_form
+       a = create_customer_account(@current_customer.id)
+       puts "Your customer ID is #{@current_customer.id}."
        puts "Congratulations on your new account! Your account number is #{a.id}."
+       user_display
      elsif user == 'Yes'
        user_login
-
        # TODO: Add menu items: New account, delete account, deposit, withdraw
      end
    end
@@ -36,15 +42,15 @@ class CommandLineInterface
      end
 
      def user_display
-      selection = prompt.select("What would you like to do today?", %w(Display_Balance Deposit Withdrawal Close_Account))
+      selection = prompt.select("What would you like to do today?", %w(Display_Balance  Close_Account))
        if selection == "Display_Balance"
          display_balance
-       # elsif user == "Deposit"
-       #   deposit
+       elsif selection == "Close Account"
+         @current_customer.close_account
        # elsif user == "Withdrawal"
        #   withdrawal
        # end
-     end
+      end
      end
 
      def display_balance
@@ -62,7 +68,7 @@ class CommandLineInterface
        c = Customer.new(**customer_attrs)
        c.save!
        c
-     end
+      end
 
      def create_customer_account(customer_id)
        account_attrs = prompt.collect do
@@ -71,12 +77,12 @@ class CommandLineInterface
 
        a = Account.new(
          balance: account_attrs[:deposit_amt],
-         customer_id: customer_id
-         # bank_id: bank_id
+         customer_id: @current_customer.id,
+         bank_id: @user_bank.id
        )
        a.save!
        a
-     end
+      end
 
 
      def run
