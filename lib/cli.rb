@@ -14,7 +14,7 @@ class CommandLineInterface
   end 
  
   def find_recipe_by_equipment
-    equipment_name = @prompt.ask('Please select your cooking equipment', require: true).split.map(&:capitalize).join(' ')
+    equipment_name = @prompt.ask('Please select your cooking equipment', required: true).split.map(&:capitalize).join(' ')
       recipes = Recipe.find_recipe_by_equipment(equipment_name)
       if recipes.length > 0
         puts recipes
@@ -24,7 +24,7 @@ class CommandLineInterface
   end 
 
   def find_recipe_by_difficulty_level
-    difficulty_level = @prompt.ask('Please entre the difficulty level',require: true).split.map(&:capitalize).join(' ')
+    difficulty_level = @prompt.ask('Please entre the difficulty level',required: true).split.map(&:capitalize).join(' ')
       recipes = Recipe.find_recipe_by_difficulty_level(difficulty_level)
       if recipes.length > 0
         puts recipes
@@ -35,7 +35,7 @@ class CommandLineInterface
   end 
 
   def find_recipe_by_time
-    cooking_time = @prompt.ask('Please entre cooking_time', require: true).split.map(&:downcase).join(' ')
+    cooking_time = @prompt.ask('Please entre cooking_time', required: true).split.map(&:downcase).join(' ')
       recipes = Recipe.find_recipe_by_time(cooking_time)
         if recipes.length > 0
           puts recipes
