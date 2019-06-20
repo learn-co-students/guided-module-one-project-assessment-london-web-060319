@@ -84,7 +84,7 @@ def which_choice?(choice, user)
         press_enter_to_main_menu(user)
     elsif choice == 9
         review = Review.longest
-        puts "#{review.id}. Book: \"#{review.book.title}\", User: #{review.user.username} - #{review.content}"
+        puts_certain_reviews([review], "This is the longest review currently on our platform: \n")
         press_enter_to_main_menu(user)
     elsif choice == 12
         puts "The average reviews per book are: #{Book.average_reviews_per_book}"
@@ -131,8 +131,7 @@ end
 def edit_review(user)
     if user.reviews.count == 0
         puts "You haven't reviewed any book yet!"
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user)
+        press_enter_to_main_menu(user)
     else
         puts_certain_reviews(user.reviews, "These are all your reviews:\n")
         review_id = ask_input("Pick the number of the review you would like to edit").to_i
@@ -151,8 +150,7 @@ end
 def delete_review(user)
     if user.reviews.count == 0
         puts "You haven't reviewed any book yet!"
-        $prompt.ask("\nPress enter to go back to main menu", echo: false)
-        menu(user)
+        press_enter_to_main_menu(user)
     else
         puts_certain_reviews(user.reviews, "These are your reviews:\n")
         review_id = ask_input("Please type the number of the review you would like to delete:").to_i
