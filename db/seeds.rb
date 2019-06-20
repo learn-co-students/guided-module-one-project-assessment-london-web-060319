@@ -1,11 +1,32 @@
+e1 = Equipment.create(name: "Microwave")
+e2 = Equipment.create(name: "Oven")
+e3 = Equipment.create(name: "Grill")
+e4 = Equipment.create(name: "Stove")
 
+r2 = Recipe.create(recipe_name:"Rice", ingredient: "Washed and pre-soaked rice, Ghee, Corinder to garnish", difficulty_level: "Easy", recipe_providers_name: "Stu",cooking_time:"30 mins", instructions: "Please follow Pasta instructions")
+r1 = Recipe.create(recipe_name:"Pasta", ingredient: "Pasta sauce,Bolied pasta,Cheese,Olive oil", difficulty_level: "medium", recipe_providers_name: "Stu",cooking_time:"30 mins", instructions: "Please follow Pasta instructions")
+r3 = Recipe.create(recipe_name:"Masala-tea", ingredient: "milk,masala tea bags,water", difficulty_level: "Easy", recipe_providers_name: "Stu",cooking_time:"30 mins", instructions: "Please follow Pasta instructions")
+r4 = Recipe.create(recipe_name:"Tandoori-chicken", ingredient:"Marinated chicken", difficulty_level: "Medium", recipe_providers_name: "Jo",cooking_time:"30 mins", instructions: "Please follow Pasta instructions")
+r5 = Recipe.create(recipe_name:"CornishPasty",ingredient:"flour,eggs,vegetables of your choice, minced meat", difficulty_level: "Hard", recipe_providers_name: "Jo",cooking_time:"20 mins", instructions: "Please follow the instructions")
+r6 = Recipe.create(recipe_name:"Yorkshire Pudding",ingredient:"flour,eggs,sausage", difficulty_level: "Hard", recipe_providers_name: "Jo",cooking_time:"30 mins", instructions: "Please follow the instructions")
+r7 = Recipe.create(recipe_name:"Black forest cake",ingredient:"flour,eggs,sugar,butter,coco-powder", difficulty_level: "Medium", recipe_providers_name: "Gab",cooking_time:"15 mins", instructions: "Please follow the instructions")
+r8 = Recipe.create(recipe_name:"Biryani",ingredient:"Rice,vegetables,ghee,spices", difficulty_level: "Medium", recipe_providers_name: "Gab",cooking_time:"30 mins", instructions: "Please follow the instructions")
+r9 = Recipe.create(recipe_name:"grilled chicken",ingredient:"Chicken and spices", difficulty_level: "Medium", recipe_providers_name: "Gab",cooking_time:"60 mins", instructions: "Please follow the instructions")
+r10 = Recipe.create(recipe_name:"Sandwich ",ingredient:"Bread,filling of your choice", difficulty_level: "Easy", recipe_providers_name: "Gab",cooking_time:"30 mins", instructions: "Please follow the instructions")
 
-
-
-
-
-
-
-
-
-puts "____________________________.....SEEDED.....___________________________"
+re1 = RecipeAndEquipment.create(equipment_id:1, recipe_id:1)
+re2 = RecipeAndEquipment.create(equipment_id:1 , recipe_id:2)
+re3 = RecipeAndEquipment.create(equipment_id:1 , recipe_id:3)
+re4 = RecipeAndEquipment.create(equipment_id:1 , recipe_id:4)
+re5 = RecipeAndEquipment.create(equipment_id:2 , recipe_id:5)
+re6 = RecipeAndEquipment.create(equipment_id:2 , recipe_id:6)
+re7 = RecipeAndEquipment.create(equipment_id:2 , recipe_id:7)
+re8 = RecipeAndEquipment.create(equipment_id:2 , recipe_id:8)
+re9 = RecipeAndEquipment.create(equipment_id:3 , recipe_id:9)
+re10 = RecipeAndEquipment.create(equipment_id:3 ,recipe_id:10)
+re11 = RecipeAndEquipment.create(equipment_id:3 ,recipe_id:11)
+re12 = RecipeAndEquipment.create(equipment_id:3 ,recipe_id:4)
+re13 = RecipeAndEquipment.create(equipment_id:4 ,recipe_id:3)
+re14 = RecipeAndEquipment.create(equipment_id:4 ,recipe_id:4)
+re15 = RecipeAndEquipment.create(equipment_id:4 ,recipe_id:5)
+re16 = RecipeAndEquipment.create(equipment_id:4 ,recipe_id:6)

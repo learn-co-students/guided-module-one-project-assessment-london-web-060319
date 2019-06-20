@@ -1,4 +1,4 @@
-class equipment < ActiveRecord::Base
-  has_many :recipes_and_equipments
-  has_many :recipes, through: :recipes_and_equipments
+class Equipment < ActiveRecord::Base
+  has_many :recipe_and_equipment
+  has_many :recipes, through: :recipe_and_equipment
 end

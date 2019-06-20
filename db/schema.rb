@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_17_140530) do
+ActiveRecord::Schema.define(version: 2019_06_19_085234) do
 
-  create_table "equipments", force: :cascade do |t|
+  create_table "equipment", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "recipe_and_equipment", force: :cascade do |t|
+    t.integer "equipment_id"
+    t.integer "recipe_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -21,13 +26,8 @@ ActiveRecord::Schema.define(version: 2019_06_17_140530) do
     t.string "ingredient"
     t.string "difficulty_level"
     t.string "recipe_providers_name"
-  end
-
-  create_table "recipes_and_equipments", force: :cascade do |t|
-    t.integer "cooking_time"
+    t.string "cooking_time"
     t.string "instructions"
-    t.integer "equipment_id"
-    t.integer "recipe_id"
   end
 
 end

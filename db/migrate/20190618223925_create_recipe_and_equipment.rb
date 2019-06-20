@@ -1,6 +1,6 @@
-class RecipesAndEquipments < ActiveRecord::Migration[5.2]
+class CreateRecipeAndEquipment < ActiveRecord::Migration[5.2]
   def change
-    create_table :recipes_and_equipments do |t|
+    create_table :recipe_and_equipment do |t|
       t.integer :cooking_time
       t.string :instructions
       t.integer :equipment_id
