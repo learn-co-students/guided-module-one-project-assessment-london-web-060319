@@ -38,10 +38,16 @@ def menu(user)
         menu.choice "Who's the chattiest user?", 8
         menu.choice "See all books", 2
         menu.choice "See my books", 6
+        menu.choice "What is the most reviewed book?", 15
         menu.choice "See books in alphabetical order", 11
+        menu.choice "See books ordered by number of reviews", 16
+        menu.choice "See all the authors on our platform", 13
+        menu.choice "Who is the most reviewed author?", 14
         menu.choice "See all reviews", 3
         menu.choice "See my reviews", 7
-        menu.choice "What book's reviews you want to read?", 10
+        menu.choice "See reviews sorted by author", 17
+        menu.choice "What author's reviews do you want to read?", 18
+        menu.choice "What book's reviews do you want to read?", 10
         menu.choice "Which is the longest review?", 9
         menu.choice "Average reviews per book", 12
         menu.choice "Edit a review", 4
@@ -72,7 +78,7 @@ def which_choice?(choice, user)
         puts_certain_reviews(user.reviews, "These are all your reviews:\n")  
         press_enter_to_main_menu(user)   
     elsif choice == 8
-        puts "The longest review so far is by: #{User.chattiest.username}"
+        $prompt.say("The longest review so far is by: #{User.chattiest.username}")
         press_enter_to_main_menu(user)
     elsif choice == 11
         puts_certain_books(Book.alphabetize_titles, "These are our books in alphabetical order:\n")
@@ -84,10 +90,29 @@ def which_choice?(choice, user)
         press_enter_to_main_menu(user)
     elsif choice == 9
         review = Review.longest
-        puts_certain_reviews([review], "This is the longest review currently on our platform: \n")
+        $prompt.say("#{review.id}. Book: \"#{review.book.title}\", User: #{review.user.username} - #{review.content}")
         press_enter_to_main_menu(user)
     elsif choice == 12
-        puts "The average reviews per book are: #{Book.average_reviews_per_book}"
+        $prompt.say("The average reviews per book are: #{Book.average_reviews_per_book}")
+        press_enter_to_main_menu(user)
+    elsif choice == 13
+        Author.all.map {|author| puts "#{author.full_name}"}
+        press_enter_to_main_menu(user)
+    elsif choice == 14
+        $prompt.say("Our most reviewed author is: #{Author.most_reviewed}")
+        press_enter_to_main_menu(user)
+    elsif choice == 15
+        puts_certain_books(Book.most_reviewed, "This is our most reviewed book:\n")
+        press_enter_to_main_menu(user)
+    elsif choice == 16
+        puts_certain_books(Book.ordered_by_n_reviews, "These are the books ordered by number of reviews:\n")
+        press_enter_to_main_menu(user)
+    elsif choice == 17
+        puts_certain_reviews(reviews, message)
+        press_enter_to_main_menu(user)
+    elsif choice == 18
+        
+        puts_certain_reviews(Author.reviews_by_author, "Here are their reviews:\n")
         press_enter_to_main_menu(user)
     end
 end
@@ -104,7 +129,11 @@ def create_review(user)
     book_id = ask_input("Please type the number of the book you would like to review, or 0 to add a new book and review it:").to_i
     if book_id == 0
         book_title = ask_input("What is the title of the book you want to review?")
-        book = Book.create(title: book_title)
+        synopsis = Faker::Hipster.sentence
+        author_first_name = ask_input("What is the author's first name?")
+        author_last_name = ask_input("What is the author's last name?")
+        author_id = (Author.find_or_create_by(first_name: author_first_name, last_name: author_last_name)).id
+        book = Book.create(title: book_title, author_id: author_id, synopsis: synopsis)
         review_content = ask_input("Please write your review here")
         review = Review.create(content: review_content, book_id: book.id, user_id: user.id)
         success("Thank you! Your review was added to our collection!", user)
@@ -117,8 +146,8 @@ def create_review(user)
 end
 
 def puts_certain_books(books, message)
-    $prompt.say(message)
-    books.each {|book| puts "#{book.id}. #{book.title}"}
+    $prompt.say(message)                                                 
+    books.each {|book| puts "#{book.id}. \"#{book.title}\", written by: #{book.author.full_name}, synopsis: #{book.synopsis}"}
 end
 
 def puts_certain_reviews(reviews, message)
@@ -131,7 +160,8 @@ end
 def edit_review(user)
     if user.reviews.count == 0
         puts "You haven't reviewed any book yet!"
-        press_enter_to_main_menu(user)
+        $prompt.ask("\nPress enter to go back to main menu", echo: false)
+        menu(user)
     else
         puts_certain_reviews(user.reviews, "These are all your reviews:\n")
         review_id = ask_input("Pick the number of the review you would like to edit").to_i
@@ -150,7 +180,8 @@ end
 def delete_review(user)
     if user.reviews.count == 0
         puts "You haven't reviewed any book yet!"
-        press_enter_to_main_menu(user)
+        $prompt.ask("\nPress enter to go back to main menu", echo: false)
+        menu(user)
     else
         puts_certain_reviews(user.reviews, "These are your reviews:\n")
         review_id = ask_input("Please type the number of the review you would like to delete:").to_i
@@ -168,4 +199,18 @@ def delete_review(user)
             failed(message, 5, user)
         end
     end
+
+    def books_or_reviews_by_author(books_or_reviews)
+        first_name = ask_input("What is the author's first name?")
+        last_name = ask_input("What is the author's last name?")
+        if author = Author.find_by(first_name: "Jk", last_name: "Rowling")
+            author.books_or_reviews
+        else 
+            puts "We don't have any books nor reviews by that author yet!"    
+        end
+    end
+
+
 end
+
+
