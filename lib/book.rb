@@ -20,4 +20,14 @@ class Book < ActiveRecord::Base
     def self.alphabetize_titles
         Book.all.order(:title)
     end
+
+    def self.most_reviewed
+        [Book.all.max_by {|book| book.reviews.count}]
+    end
+
+    def self.ordered_by_n_reviews
+        Book.all.sort_by {|book| book.reviews.count}.reverse
+    end
+
+
 end
