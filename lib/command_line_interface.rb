@@ -108,10 +108,9 @@ def which_choice?(choice, user)
         puts_certain_books(Book.ordered_by_n_reviews, "These are the books ordered by number of reviews:\n")
         press_enter_to_main_menu(user)
     elsif choice == 17
-        puts_certain_reviews(reviews, message)
+        puts_certain_reviews(Review.all.sort_by_author, "Here are the reviews grouped by author:\n")
         press_enter_to_main_menu(user)
     elsif choice == 18
-        
         puts_certain_reviews(Author.reviews_by_author, "Here are their reviews:\n")
         press_enter_to_main_menu(user)
     end
@@ -188,9 +187,13 @@ def delete_review(user)
         review = Review.find_by(id: review_id, user_id: user.id)
         if user.reviews.include? review
             book = review.book
+            author = book.author
             Review.delete(review_id)
             if book.reviews.empty?
                 book.delete
+            end
+            if author.reviews.empty?
+                author.delete
             end
             message = "Success! The review has been deleted!"
             success(message, user)
@@ -199,18 +202,6 @@ def delete_review(user)
             failed(message, 5, user)
         end
     end
-
-    def books_or_reviews_by_author(books_or_reviews)
-        first_name = ask_input("What is the author's first name?")
-        last_name = ask_input("What is the author's last name?")
-        if author = Author.find_by(first_name: "Jk", last_name: "Rowling")
-            author.books_or_reviews
-        else 
-            puts "We don't have any books nor reviews by that author yet!"    
-        end
-    end
-
-
 end
 
 
