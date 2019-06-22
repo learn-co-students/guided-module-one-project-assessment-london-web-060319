@@ -1,3 +1,5 @@
 require_relative '../config/environment'
 
-puts "hello world"
+welcome_msg
+user = this_user
+menu(user)
